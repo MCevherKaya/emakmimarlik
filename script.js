@@ -1,12 +1,4 @@
-const menuButton = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
-
-menuButton?.addEventListener("click", () => {
-  navLinks.classList.toggle("show");
-});
-
-document.querySelectorAll(".nav-links a").forEach((link) => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("show");
-  });
-});
+const btn=document.querySelector('.menu-toggle');
+const nav=document.querySelector('.nav-links');
+btn?.addEventListener('click',()=>nav.classList.toggle('show'));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('show')));
