@@ -3,233 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EMAK Mimarlık & Dekorasyon | Modern ve Zamansız Dokunuşlar</title>
-  <meta name="description" content="EMAK Mimarlık & Dekorasyon; mimarlık, iç mimarlık ve dekorasyon alanlarında estetik, fonksiyon ve kaliteyi bir araya getirir." />
-  <meta name="theme-color" content="#0b0d12" />
+  <title>EMAK Mimarlık & Dekorasyon</title>
+  <meta name="description" content="EMAK Mimarlık & Dekorasyon; mimarlık, iç mimarlık, dekorasyon, proje tasarımı ve uygulama alanlarında modern ve kaliteli çözümler sunar." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="page-glow glow-1"></div>
-  <div class="page-glow glow-2"></div>
-
   <header class="header" id="top">
-    <div class="container nav-wrap">
-      <a href="#top" class="brand">
-        <img src="assets/logo.png" alt="EMAK Mimarlık & Dekorasyon logosu" class="brand-logo">
-      </a>
-
-      <button class="menu-toggle" aria-label="Menüyü aç/kapat" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
-      <nav class="nav">
-        <a href="#top" class="active">Ana Sayfa</a>
+    <div class="container nav">
+      <a class="logo" href="#top"><img src="assets/logo.png" alt="EMAK Mimarlık & Dekorasyon"></a>
+      <button class="menu-btn" aria-label="Menüyü aç">☰</button>
+      <nav class="links">
+        <a href="#top">Ana Sayfa</a>
         <a href="#about">Hakkımızda</a>
         <a href="#services">Hizmetler</a>
         <a href="#projects">Projeler</a>
         <a href="#contact">İletişim</a>
       </nav>
-
-      <a class="nav-cta" href="tel:+905321204785">İletişime Geç</a>
+      <a class="top-btn" href="tel:+905321204785">İletişime Geç</a>
     </div>
   </header>
 
   <main>
-    <section class="hero section">
+    <section class="hero">
       <div class="container hero-grid">
-        <div class="hero-text">
-          <p class="section-mini">EMAK Mimarlık & Dekorasyon</p>
+        <div class="hero-content">
+          <p class="mini">EMAK Mimarlık & Dekorasyon</p>
           <h1>Mekânlarınıza modern ve zamansız dokunuşlar.</h1>
-          <div class="gold-line"></div>
-          <p class="lead">
-            EMAK Mimarlık & Dekorasyon olarak, mimarlık, iç mimarlık ve dekorasyon alanlarında
-            estetik, fonksiyon ve kaliteyi bir araya getiriyoruz. Hayalinizdeki yaşam alanlarını
-            titizlikle gerçeğe dönüştürüyoruz.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#projects">Projeleri İncele</a>
-            <a class="btn btn-secondary" href="#contact">İletişime Geç</a>
+          <span class="line"></span>
+          <p class="lead">Mimarlık, iç mimarlık ve dekorasyon alanlarında estetik, fonksiyon ve kaliteyi bir araya getiriyoruz. Hayalinizdeki yaşam alanlarını titizlikle gerçeğe dönüştürüyoruz.</p>
+          <div class="actions">
+            <a class="btn gold" href="#projects">Projeleri İncele</a>
+            <a class="btn ghost" href="#contact">İletişime Geç</a>
           </div>
         </div>
-
-        <div class="hero-card">
-          <div class="hero-badge">Lüks • Modern • Zamansız</div>
-          <div class="hero-building">
-            <div class="building building-back"></div>
-            <div class="building building-main"></div>
-            <div class="pool"></div>
+        <div class="hero-visual">
+          <div class="villa">
+            <div class="roof"></div>
+            <div class="floor top"></div>
+            <div class="floor bottom"></div>
+            <div class="water"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="about">
+    <section class="section about" id="about">
       <div class="container about-grid">
-        <div class="about-copy">
-          <p class="section-mini">Hakkımızda</p>
+        <div>
+          <p class="mini">Hakkımızda</p>
           <h2>Mimaride estetik, yaşamda kalite.</h2>
-          <p>
-            Her projede kullanıcı ihtiyaçlarını, estetik anlayışı ve teknik mükemmeliyeti
-            bir araya getiriyoruz. Zamansız tasarımlar, kaliteli malzeme seçimi ve
-            titiz uygulama süreçlerimizle fark yaratıyoruz.
-          </p>
-          <a class="btn btn-outline" href="#contact">Bizimle Çalışın</a>
+          <p>Her projede kullanıcı ihtiyaçlarını, estetik anlayışı ve teknik mükemmeliyeti bir araya getiriyoruz. Zamansız tasarımlar, kaliteli malzeme seçimi ve titiz uygulama süreçleriyle fark yaratıyoruz.</p>
         </div>
-
-        <div class="about-panel">
-          <div class="about-stat">
-            <strong>01</strong>
-            <span>Özgün tasarım yaklaşımı</span>
-          </div>
-          <div class="about-stat">
-            <strong>02</strong>
-            <span>Kaliteli uygulama süreci</span>
-          </div>
-          <div class="about-stat">
-            <strong>03</strong>
-            <span>Müşteri odaklı iletişim</span>
-          </div>
-          <div class="about-stat">
-            <strong>04</strong>
-            <span>Modern ve fonksiyonel çözümler</span>
-          </div>
+        <div class="about-cards">
+          <div><strong>01</strong><span>Özgün tasarım</span></div>
+          <div><strong>02</strong><span>Kaliteli uygulama</span></div>
+          <div><strong>03</strong><span>Modern detaylar</span></div>
+          <div><strong>04</strong><span>Profesyonel süreç</span></div>
         </div>
       </div>
     </section>
 
     <section class="section" id="services">
       <div class="container">
-        <div class="section-heading center">
-          <p class="section-mini">Hizmetlerimiz</p>
-          <h2>İhtiyacınıza uygun profesyonel çözümler</h2>
+        <div class="title">
+          <p class="mini">Hizmetlerimiz</p>
+          <h2>Yaşam alanlarınız için bütüncül çözümler</h2>
         </div>
-
-        <div class="services-grid">
-          <article class="service-card">
-            <div class="icon-wrap">▣</div>
-            <h3>Mimarlık</h3>
-            <p>Yenilikçi ve işlevsel mimari çözümler üretiyoruz.</p>
-          </article>
-
-          <article class="service-card">
-            <div class="icon-wrap">⌂</div>
-            <h3>İç Mimarlık</h3>
-            <p>İç mekânlarda estetik ve konforu bir araya getiriyoruz.</p>
-          </article>
-
-          <article class="service-card">
-            <div class="icon-wrap">✦</div>
-            <h3>Dekorasyon</h3>
-            <p>Yaşam alanlarınıza tarz, karakter ve uyum katıyoruz.</p>
-          </article>
-
-          <article class="service-card">
-            <div class="icon-wrap">△</div>
-            <h3>Proje Tasarımı</h3>
-            <p>İhtiyacınıza özel özgün ve yaratıcı proje tasarımları hazırlıyoruz.</p>
-          </article>
-
-          <article class="service-card">
-            <div class="icon-wrap">◍</div>
-            <h3>Uygulama</h3>
-            <p>Projelerinizi titizlikle uyguluyor, hayata geçiriyoruz.</p>
-          </article>
-
-          <article class="service-card">
-            <div class="icon-wrap">◎</div>
-            <h3>Danışmanlık</h3>
-            <p>Doğru kararlar için profesyonel danışmanlık desteği sunuyoruz.</p>
-          </article>
+        <div class="services">
+          <article><span>▣</span><h3>Mimarlık</h3><p>Yenilikçi ve işlevsel mimari çözümler üretiyoruz.</p></article>
+          <article><span>⌂</span><h3>İç Mimarlık</h3><p>İç mekânlarda estetik ve konforu bir araya getiriyoruz.</p></article>
+          <article><span>✦</span><h3>Dekorasyon</h3><p>Yaşam alanlarınıza karakter ve uyum katıyoruz.</p></article>
+          <article><span>△</span><h3>Proje Tasarımı</h3><p>İhtiyaca özel özgün proje tasarımları hazırlıyoruz.</p></article>
+          <article><span>◍</span><h3>Uygulama</h3><p>Projeleri titizlikle uygulayıp hayata geçiriyoruz.</p></article>
+          <article><span>◎</span><h3>Danışmanlık</h3><p>Doğru kararlar için profesyonel destek sunuyoruz.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="projects">
+    <section class="section projects" id="projects">
       <div class="container">
-        <div class="section-heading center">
-          <p class="section-mini">Projelerimiz</p>
-          <h2>Öne çıkan çalışma alanlarımız</h2>
+        <div class="title">
+          <p class="mini">Projelerimiz</p>
+          <h2>Seçili çalışma alanları</h2>
         </div>
-
-        <div class="projects-grid">
-          <article class="project-card tall project-1">
-            <div class="project-overlay">
-              <span>Mimarlık</span>
-              <h3>Modern Villa Projesi</h3>
-            </div>
-          </article>
-
-          <article class="project-card project-2">
-            <div class="project-overlay">
-              <span>İç Mimarlık</span>
-              <h3>Lüks Daire Tasarımı</h3>
-            </div>
-          </article>
-
-          <article class="project-card project-3">
-            <div class="project-overlay">
-              <span>Dekorasyon</span>
-              <h3>Konut Dekorasyon</h3>
-            </div>
-          </article>
-
-          <article class="project-card project-4">
-            <div class="project-overlay">
-              <span>Uygulama</span>
-              <h3>Ofis Uygulama</h3>
-            </div>
-          </article>
-
-          <article class="project-card project-5">
-            <div class="project-overlay">
-              <span>Ticari Proje</span>
-              <h3>Modern Ticari Mekân</h3>
-            </div>
-          </article>
+        <div class="project-grid">
+          <article class="big"><div><span>Mimarlık</span><h3>Modern Villa Projesi</h3></div></article>
+          <article><div><span>İç Mimarlık</span><h3>Lüks Daire Tasarımı</h3></div></article>
+          <article><div><span>Dekorasyon</span><h3>Konut Dekorasyon</h3></div></article>
+          <article><div><span>Uygulama</span><h3>Ofis Uygulama</h3></div></article>
+          <article><div><span>Ticari Proje</span><h3>Modern Ticari Mekân</h3></div></article>
         </div>
       </div>
     </section>
 
-    <section class="contact-band section" id="contact">
+    <section class="section contact" id="contact">
       <div class="container contact-grid">
-        <div class="contact-box">
-          <p class="section-mini">Bize Ulaşın</p>
+        <div>
+          <p class="mini">İletişim</p>
           <h2>Hayalinizdeki mekânı birlikte tasarlayalım.</h2>
-          <p class="contact-text">
-            Projeniz hakkında konuşmak, detay almak veya teklif istemek için bize ulaşabilirsiniz.
-          </p>
+          <p>Projeniz hakkında konuşmak, detay almak veya teklif istemek için bizimle iletişime geçebilirsiniz.</p>
         </div>
-
-        <div class="contact-cards">
-          <a class="contact-card" href="tel:+905321204785">
-            <small>Telefon</small>
-            <strong>0 (532) 120 47 85</strong>
-          </a>
-
-          <a class="contact-card" href="https://www.instagram.com/emak_mimarlik/" target="_blank" rel="noopener">
-            <small>Instagram</small>
-            <strong>@emak_mimarlik</strong>
-          </a>
-
-          <a class="contact-card full" href="https://wa.me/905321204785" target="_blank" rel="noopener">
-            <small>Hızlı İletişim</small>
-            <strong>WhatsApp Üzerinden İletişime Geç</strong>
-          </a>
+        <div class="contact-links">
+          <a href="tel:+905321204785"><small>Telefon</small><strong>0 (532) 120 47 85</strong></a>
+          <a href="https://www.instagram.com/emak_mimarlik/" target="_blank"><small>Instagram</small><strong>@emak_mimarlik</strong></a>
+          <a href="https://wa.me/905321204785" target="_blank"><small>WhatsApp</small><strong>Hızlı iletişime geç</strong></a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container footer-wrap">
-      <div class="footer-left">
-        <img src="assets/logo.jpg" alt="EMAK Mimarlık & Dekorasyon logosu" class="footer-logo">
-      </div>
+    <div class="container foot">
+      <img src="assets/logo.png" alt="EMAK Mimarlık & Dekorasyon">
       <p>© 2026 EMAK Mimarlık & Dekorasyon. Tüm hakları saklıdır.</p>
-      <a href="#top" class="to-top">Yukarı Çık</a>
+      <a href="#top">Yukarı Çık</a>
     </div>
   </footer>
 
