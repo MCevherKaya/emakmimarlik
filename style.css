@@ -141,3 +141,27 @@
     height:440px;
   }
 }
+/* PROJECT CATEGORY FIX */
+
+.project-category-grid,
+.gallery-grid{
+  display:grid !important;
+}
+
+.project-category-grid{
+  grid-template-columns:repeat(3,1fr) !important;
+  gap:24px;
+}
+
+.gallery-grid{
+  grid-template-columns:repeat(2,1fr) !important;
+  gap:20px;
+  margin-top:30px;
+}
+
+@media(max-width:900px){
+  .project-category-grid,
+  .gallery-grid{
+    grid-template-columns:1fr !important;
+  }
+}
