@@ -1,39 +1,44 @@
-const btn=document.querySelector('.menu-toggle');
-const nav=document.querySelector('.nav-links');
-btn?.addEventListener('click',()=>nav.classList.toggle('show'));
-document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('show')));
+/* ================================
+   COUNTER ANIMATION
+================================ */
+
 const counters = document.querySelectorAll(".counter");
 
-const runCounter = (counter) => {
+const animateCounter = (counter) => {
   const target = Number(counter.dataset.target);
-  let current = 0;
-  const step = Math.ceil(target / 70);
+  const duration = 1400;
+  const startTime = performance.now();
 
-  const updateCounter = () => {
-    current += step;
+  const update = (currentTime) => {
+    const progress = Math.min((currentTime - startTime) / duration, 1);
+    const value = Math.floor(progress * target);
 
-    if (current >= target) {
+    counter.textContent = value;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
       counter.textContent = target;
-      return;
     }
-
-    counter.textContent = current;
-    requestAnimationFrame(updateCounter);
   };
 
-  updateCounter();
+  requestAnimationFrame(update);
 };
 
 const counterObserver = new IntersectionObserver(
   (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        runCounter(entry.target);
+        animateCounter(entry.target);
         observer.unobserve(entry.target);
       }
     });
   },
-  { threshold: 0.4 }
+  {
+    threshold: 0.35,
+  }
 );
 
-counters.forEach((counter) => counterObserver.observe(counter));
+counters.forEach((counter) => {
+  counterObserver.observe(counter);
+});
