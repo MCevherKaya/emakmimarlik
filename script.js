@@ -1,22 +1,4 @@
-const menuButton = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav-links');
-
-menuButton?.addEventListener('click', () => {
-  const isOpen = nav.classList.toggle('show');
-  menuButton.setAttribute('aria-expanded', String(isOpen));
-});
-
-document.querySelectorAll('.nav-links a').forEach((link) => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('show');
-    menuButton?.setAttribute('aria-expanded', 'false');
-  });
-});
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, { threshold: 0.12 });
-
-document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+const btn=document.querySelector('.menu-toggle');
+const nav=document.querySelector('.nav-links');
+btn?.addEventListener('click',()=>nav.classList.toggle('show'));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('show')));
