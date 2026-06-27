@@ -1,38 +1,100 @@
-<!-- HAKKIMIZDA.HTML -->
-<!-- Bu dosyada mevcut <section class="page-hero"> bloğunu silip aşağıdaki blokla değiştirin. -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hakkımızda | EMAK Mimarlık & Dekorasyon</title>
+  <meta name="description" content="EMAK Mimarlık & Dekorasyon hakkında bilgi alın.">
+  <meta name="theme-color" content="#090b0f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="noise"></div>
 
-<section class="section about-hero-premium">
-  <div class="container about-premium-grid">
-    <div class="about-premium-copy reveal">
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand" aria-label="EMAK Mimarlık ana sayfa">
+      <img src="assets/logo.png" alt="EMAK Mimarlık & Dekorasyon logosu">
+    </a>
+
+    <button class="menu-toggle" aria-label="Menüyü aç/kapat">
+      <span></span><span></span>
+    </button>
+
+    <nav class="nav-links">
+      <a  href="index.html">Ana Sayfa</a>
+      <a class="active" href="hakkimizda.html">Hakkımızda</a>
+      <a  href="hizmetler.html">Hizmetler</a>
+      <a  href="projeler.html">Projeler</a>
+      <a  href="iletisim.html">İletişim</a>
+    </nav>
+
+    <a class="header-cta" href="https://wa.me/905321204785?text=Merhaba,%20EMAK%20Mimarl%C4%B1k%20ile%20projem%20hakk%C4%B1nda%20g%C3%B6r%C3%BC%C5%9Fmek%20ve%20teklif%20almak%20istiyorum." target="_blank" rel="noopener">Teklif Al</a>
+  </div>
+</header>
+
+<main>
+<section class="page-hero">
+  <div class="container reveal">
+    <p class="eyebrow">Hakkımızda</p>
+    <h1>Mekânı yalnızca tasarlamıyor, karakter kazandırıyoruz.</h1>
+    <p>Her projede kullanıcının ihtiyacını, mekânın potansiyelini ve estetik dengeyi birlikte değerlendiriyoruz.</p>
+  </div>
+</section>
+<section class="section about-page">
+  <div class="container about-grid">
+    <div class="section-title reveal"><p class="eyebrow">EMAK Yaklaşımı</p><h2>Estetik, fonksiyon ve kalite aynı çizgide.</h2></div>
+    <div class="about-text reveal"><p>EMAK Mimarlık & Dekorasyon; mimarlık, iç mimarlık, dekorasyon ve uygulama süreçlerinde bütüncül çözümler sunar.</p><p>Amacımız; yalnızca güzel görünen değil, kullanıcıya konfor sağlayan, uygulanabilir ve uzun ömürlü mekânlar üretmektir.</p><p>Tasarım sürecinden uygulama aşamasına kadar her detay; malzeme, ışık, fonksiyon ve zaman yönetimi dikkate alınarak planlanır.</p></div>
+  </div>
+</section>
+
+<section class="section about-video-section">
+  <div class="container about-video-grid">
+    <div class="about-video-copy reveal">
       <p class="eyebrow">Neden EMAK?</p>
-      <h1>Mekânlara sadece tasarım değil, değer katıyoruz.</h1>
-      <p class="about-premium-desc">
-        Projenin ilk fikir aşamasından uygulama sürecine kadar; estetik,
-        fonksiyonellik, malzeme seçimi ve kaliteli işçilik anlayışıyla ilerliyoruz.
+      <h2>Mekânlara sadece tasarım değil, değer katıyoruz.</h2>
+      <p>
+        Projenin ilk fikir aşamasından uygulama sürecine kadar; estetik, fonksiyonellik,
+        malzeme seçimi ve kaliteli işçilik anlayışıyla ilerliyoruz.
       </p>
 
       <div class="about-feature-list">
-        <div class="about-feature-card">
-          <h3>Şeffaf Süreç</h3>
-          <p>Planlama, keşif ve uygulama adımlarını net şekilde yönetiriz.</p>
-        </div>
-
-        <div class="about-feature-card">
-          <h3>Kaliteli Malzeme</h3>
-          <p>Uzun ömürlü, estetik ve güvenilir malzeme seçimlerine önem veririz.</p>
-        </div>
-
-        <div class="about-feature-card">
-          <h3>Zamanında Teslim</h3>
-          <p>Projeleri belirlenen takvim doğrultusunda tamamlamaya özen gösteririz.</p>
-        </div>
+        <div><strong>Şeffaf Süreç</strong><span>Planlama, keşif ve uygulama adımlarını net şekilde yönetiriz.</span></div>
+        <div><strong>Kaliteli Malzeme</strong><span>Uzun ömürlü, estetik ve güvenilir malzeme seçimlerine önem veririz.</span></div>
+        <div><strong>Anahtar Teslim</strong><span>Tasarımdan uygulamaya kadar süreci bütüncül şekilde ele alırız.</span></div>
       </div>
     </div>
 
-    <div class="about-premium-media reveal">
-      <video autoplay muted loop playsinline>
+    <div class="about-video-card reveal">
+      <video autoplay muted loop playsinline preload="metadata">
         <source src="assets/videos/hakkimizda-video.mp4" type="video/mp4">
+        Tarayıcınız video etiketini desteklemiyor.
       </video>
     </div>
   </div>
 </section>
+
+<section class="section values-section">
+  <div class="container value-grid">
+    <div class="value-card reveal"><span>01</span><h3>Doğru Analiz</h3><p>İhtiyaçları ve mekânın potansiyelini doğru okuyarak süreci başlatırız.</p></div>
+    <div class="value-card reveal"><span>02</span><h3>Şık Tasarım</h3><p>Modern, zamansız ve kullanıcıya özel tasarım dili oluştururuz.</p></div>
+    <div class="value-card reveal"><span>03</span><h3>Kontrollü Uygulama</h3><p>Projeyi sahada doğru, kaliteli ve planlı şekilde hayata geçiririz.</p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <img src="assets/logo.png" alt="EMAK Mimarlık & Dekorasyon logosu">
+    <p>© 2026 EMAK Mimarlık & Dekorasyon. Tüm hakları saklıdır.</p>
+    <a href="iletisim.html">Teklif Al</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
