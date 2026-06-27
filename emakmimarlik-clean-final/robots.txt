@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://emakmimarlik.com.tr/sitemap.xml
