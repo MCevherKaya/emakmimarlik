@@ -145,8 +145,29 @@ document.querySelectorAll(".hero-video-frame").forEach((frame) => {
   });
 
   video.addEventListener("click", toggleSound);
-  video.muted = false;
+  video.muted = true;
   video.volume = 1.0;
   video.play().catch(() => {});
   updateText();
+});
+
+/* FORCE HERO VIDEO AUTOPLAY */
+window.addEventListener("load", () => {
+  const video = document.querySelector(".hero-video");
+
+  if (!video) return;
+
+  video.muted = true;
+  video.autoplay = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = "auto";
+
+  const playVideo = () => {
+    video.play().catch(() => {});
+  };
+
+  playVideo();
+  setTimeout(playVideo, 500);
+  setTimeout(playVideo, 1500);
 });
