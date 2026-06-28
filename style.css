@@ -814,3 +814,57 @@ h1{font-size:clamp(46px,6.4vw,80px);line-height:1.03;letter-spacing:-.04em;color
     font-size:15px;
   }
 }
+
+
+/* FINAL: VIDEO SOUND TOGGLE + DESIGN REALITY PAGE */
+.video-sound-toggle{
+  position:absolute;
+  right:22px;
+  bottom:22px;
+  z-index:5;
+  border:1px solid rgba(214,173,97,.45);
+  background:rgba(8,10,14,.72);
+  color:#fff2d4;
+  backdrop-filter:blur(12px);
+  border-radius:999px;
+  padding:12px 18px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.25s ease;
+}
+.video-sound-toggle:hover{
+  transform:translateY(-2px);
+  background:rgba(214,173,97,.15);
+}
+.project-category-grid{
+  grid-template-columns:repeat(4,1fr);
+}
+.design-card{
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.82)),
+    url("assets/design-reality/mutfak-3d-1.jpg") center/cover;
+}
+.design-real-hero{
+  background:
+    radial-gradient(circle at 80% 18%,rgba(214,173,97,.10),transparent 28%),
+    linear-gradient(180deg,rgba(255,255,255,.015),transparent);
+}
+.design-real-section .compare-label{
+  background:rgba(9,12,17,.68);
+}
+@media(max-width:1100px){
+  .project-category-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+@media(max-width:640px){
+  .project-category-grid{
+    grid-template-columns:1fr;
+  }
+  .video-sound-toggle{
+    right:14px;
+    bottom:14px;
+    padding:10px 14px;
+    font-size:13px;
+  }
+}

@@ -119,3 +119,31 @@ document.querySelectorAll(".compare-slider").forEach((slider) => {
   range.addEventListener("input", updateSlider);
   updateSlider();
 });
+
+
+/* HERO VIDEO SOUND TOGGLE */
+document.querySelectorAll(".hero-video-frame").forEach((frame) => {
+  const video = frame.querySelector("video");
+  const toggle = frame.querySelector(".video-sound-toggle");
+  if (!video || !toggle) return;
+
+  const updateText = () => {
+    toggle.textContent = video.muted ? "Sesi Aç" : "Sesi Kapat";
+    toggle.setAttribute("aria-label", video.muted ? "Video sesini aç" : "Video sesini kapat");
+  };
+
+  const toggleSound = () => {
+    video.muted = !video.muted;
+    video.volume = 0.65;
+    video.play().catch(() => {});
+    updateText();
+  };
+
+  toggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleSound();
+  });
+
+  video.addEventListener("click", toggleSound);
+  updateText();
+});
