@@ -102,3 +102,20 @@ if (galleryImages.length) {
     if (e.key === "Escape" && lightbox.classList.contains("show")) closeLightbox();
   });
 }
+
+
+/* BEFORE / AFTER SLIDER */
+document.querySelectorAll(".compare-slider").forEach((slider) => {
+  const range = slider.querySelector(".compare-range");
+  const afterImg = slider.querySelector(".compare-img.after");
+  const handle = slider.querySelector(".compare-handle");
+
+  const updateSlider = () => {
+    const value = range.value;
+    afterImg.style.clipPath = `inset(0 0 0 ${value}%)`;
+    handle.style.left = `${value}%`;
+  };
+
+  range.addEventListener("input", updateSlider);
+  updateSlider();
+});
