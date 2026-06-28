@@ -134,10 +134,10 @@ document.querySelectorAll(".hero-video-frame").forEach((frame) => {
 
   const toggleSound = () => {
     video.muted = !video.muted;
-    video.volume = 0.65;
+    video.volume = 1.0;
     video.play().catch(() => {});
     updateText();
-  };
+};
 
   toggle.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -145,5 +145,8 @@ document.querySelectorAll(".hero-video-frame").forEach((frame) => {
   });
 
   video.addEventListener("click", toggleSound);
+  video.muted = false;
+  video.volume = 1.0;
+  video.play().catch(() => {});
   updateText();
 });
