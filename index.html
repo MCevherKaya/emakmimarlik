@@ -89,30 +89,6 @@
       </div>
     </section>
 
-    <section class="stats-section">
-      <div class="container stats-grid">
-        <div class="stat-card reveal">
-          <strong><span class="counter" data-target="250">0</span>+</strong>
-          <p>Tamamlanan Proje</p>
-        </div>
-
-        <div class="stat-card reveal">
-          <strong><span class="counter" data-target="12">0</span>+</strong>
-          <p>Yıllık Deneyim</p>
-        </div>
-
-        <div class="stat-card reveal">
-          <strong><span class="counter" data-target="100">0</span>%</strong>
-          <p>Müşteri Memnuniyeti</p>
-        </div>
-
-        <div class="stat-card reveal">
-          <strong><span class="counter" data-target="20">0</span>+</strong>
-          <p>Çözüm Ortağı</p>
-        </div>
-      </div>
-    </section>
-
     <section class="section preview-section">
       <div class="container preview-grid">
         <a href="hakkimizda.html" class="preview-card reveal">
@@ -151,6 +127,90 @@
       <a href="iletisim.html">Teklif Al</a>
     </div>
   </footer>
+
+  <section class="section premium-contact-section" id="teklif">
+  <div class="container premium-contact-box">
+
+    <div class="premium-contact-info">
+      <p class="eyebrow">Bize Ulaşın</p>
+      <h2>Projenizi birlikte planlayalım.</h2>
+      <p>
+        Yaşam alanınız, banyo, mutfak, antre veya dekorasyon projeniz için
+        bizimle iletişime geçin. Size en kısa sürede dönüş yapalım.
+      </p>
+
+      <div class="contact-mini-card">
+        <small>Telefon</small>
+        <strong>0 (532) 120 47 85</strong>
+      </div>
+
+      <div class="contact-mini-card">
+        <small>E-posta</small>
+        <strong>emakmimari@gmail.com</strong>
+      </div>
+
+      <div class="contact-mini-card">
+        <small>Hizmetler</small>
+        <strong>Mimarlık • İç Mimarlık • Dekorasyon</strong>
+      </div>
+    </div>
+
+    <form class="premium-form" action="https://formsubmit.co/emakmimari@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="EMAK Mimarlık Yeni Teklif Talebi">
+      <input type="hidden" name="_captcha" value="false">
+
+      <div class="form-row">
+        <label>
+          Adınız Soyadınız *
+          <input type="text" name="ad_soyad" required>
+        </label>
+
+        <label>
+          Mail Adresiniz *
+          <input type="email" name="email" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label>
+          Telefon Numaranız *
+          <input type="tel" name="telefon" required>
+        </label>
+
+        <label>
+          Konu *
+          <input type="text" name="konu" required>
+        </label>
+      </div>
+
+      <label>
+        Hizmet Seçimi *
+        <select name="hizmet" required>
+          <option value="">Hizmetinizi seçin</option>
+          <option value="Banyo Tasarımı">Banyo Tasarımı</option>
+          <option value="Mutfak Tasarımı">Mutfak Tasarımı</option>
+          <option value="Antre Tasarımı">Antre Tasarımı</option>
+          <option value="İç Mimarlık">İç Mimarlık</option>
+          <option value="Dekorasyon">Dekorasyon</option>
+          <option value="Anahtar Teslim Uygulama">Anahtar Teslim Uygulama</option>
+        </select>
+      </label>
+
+      <label>
+        Mesajınız *
+        <textarea name="mesaj" required></textarea>
+      </label>
+
+      <label class="privacy-check">
+        <input type="checkbox" required>
+        <span>Kişisel verilerimin iletişim amacıyla işlenmesini kabul ediyorum.</span>
+      </label>
+
+      <button type="submit" class="form-submit">Gönder</button>
+    </form>
+
+  </div>
+</section> 
 
   <script src="script.js"></script>
 </body>
