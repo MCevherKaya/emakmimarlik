@@ -186,3 +186,29 @@ h1{font-size:clamp(46px,6.4vw,80px);line-height:1.03;letter-spacing:-.04em;color
   .about-video-frame video{height:330px}
   .footer-grid{flex-direction:column;text-align:center}
 }
+
+.about-feature-list{
+    display:grid;
+    gap:18px;
+    margin-top:30px;
+}
+
+.about-feature-list div{
+    padding:24px;
+    border-radius:22px;
+    border:1px solid var(--line);
+    border-left:3px solid var(--gold);
+    background:rgba(255,255,255,.03);
+}
+
+.about-feature-list strong{
+    display:block;
+    color:#fff2d4;
+    font-size:20px;
+    margin-bottom:8px;
+}
+
+.about-feature-list span{
+    color:var(--muted);
+    line-height:1.7;
+}
