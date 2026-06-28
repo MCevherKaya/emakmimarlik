@@ -1,0 +1,10 @@
+EMAK Mimarlık form kurulumu
+
+Bu sürümde iletişim formu Web3Forms ile çalışacak şekilde ayarlandı.
+Access Key: 251475d5-185d-41c1-bb67-a38122b4efb8
+
+Mesajlar Web3Forms panelinde bu access key'e bağlı alıcı e-posta adresine gider.
+Web3Forms hesabında alıcı e-posta adresini emakmimari@gmail.com olarak kontrol edin.
+
+Form başarılı gönderildiğinde kullanıcı şu mesajı görür:
+“Talebiniz başarıyla alınmıştır. En kısa sürede sizinle iletişime geçeceğiz.”
