@@ -236,52 +236,191 @@ if (topBtn) {
   banner.querySelector(".reject")?.addEventListener("click", () => closeBanner("rejected"));
 })();
 
-// Smart EMAK Chat Support: guided assistant + lead capture + WhatsApp handoff
+// Smart EMAK Chat Support: premium guided assistant + lead capture + WhatsApp handoff
 (function initEmakSmartChat(){
   if (document.querySelector(".emak-chat-launcher")) return;
 
   const accessKey = "251475d5-185d-41c1-bb67-a38122b4efb8";
+  const phoneDisplay = "0 (532) 120 47 85";
+  const phoneHref = "tel:+905321204785";
+  const emailHref = "mailto:emakmimari@gmail.com";
+  const instagramHref = "https://www.instagram.com/emak_mimarlik/";
+  const servicesHref = "hizmetler.html";
+  const projectsHref = "projeler.html";
+  const quoteHref = "iletisim.html";
+  const mapsHref = "https://www.google.com/maps/search/?api=1&query=EMAK%20Mimarl%C4%B1k%20Yakuplu%20Mah.%20H%C3%BCrriyet%20Blv.%20Skyport%20Residence%20No%3A1%20Beylikd%C3%BCz%C3%BC%20%C4%B0stanbul";
   const whatsappUrl = "https://wa.me/905321204785?text=";
   const defaultWhatsappText = "Merhaba, EMAK Mimarlık web sitesindeki canlı destekten geliyorum. Projem hakkında bilgi almak istiyorum.";
 
+  const normalize = (str) => (str || "")
+    .toLocaleLowerCase("tr-TR")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  const businessStatus = () => {
+    const now = new Date();
+    const day = now.getDay(); // 0 Sunday
+    const hour = now.getHours();
+    const open = day >= 1 && day <= 6 && hour >= 9 && hour < 19;
+    return open
+      ? "Şu anda ekibimiz hizmet vermektedir. Dilerseniz WhatsApp üzerinden hızlıca iletişime geçebilirsiniz."
+      : "Şu anda mesai saatleri dışındayız. Mesajınızı bırakabilirsiniz; ilk iş gününde sizinle iletişime geçilecektir.";
+  };
+
+  const whatsappLink = (text = defaultWhatsappText) => whatsappUrl + encodeURIComponent(text);
+  const actionButtons = (items = ["whatsapp", "call", "route", "quote"]) => {
+    const map = {
+      whatsapp:`<a class="emak-action whatsapp" href="${whatsappLink()}" target="_blank" rel="noopener">🟢 WhatsApp</a>`,
+      call:`<a class="emak-action" href="${phoneHref}">📞 Ara</a>`,
+      route:`<a class="emak-action" href="${mapsHref}" target="_blank" rel="noopener">📍 Yol Tarifi</a>`,
+      quote:`<a class="emak-action" href="${quoteHref}">💰 Teklif Al</a>`,
+      services:`<a class="emak-action" href="${servicesHref}">🏠 Hizmetler</a>`,
+      projects:`<a class="emak-action" href="${projectsHref}">⭐⭐ Projeler</a>`,
+      instagram:`<a class="emak-action" href="${instagramHref}" target="_blank" rel="noopener">Instagram</a>`,
+      email:`<a class="emak-action" href="${emailHref}">✉️ Mail</a>`
+    };
+    return `<div class="emak-chat-actions">${items.map(i => map[i]).join("")}</div>`;
+  };
+
+  const questionBank = [
+    "Ücretsiz keşif yapıyor musunuz?", "Teklif almak istiyorum", "Ortalama fiyat nedir?", "Ödeme seçenekleri nelerdir?",
+    "Anahtar teslim yapıyor musunuz?", "Sadece tasarım hizmeti veriyor musunuz?", "Mobilya tasarlıyor musunuz?",
+    "Villa yapıyor musunuz?", "Ofis tasarlıyor musunuz?", "Kafe tasarlıyor musunuz?", "Restoran tasarlıyor musunuz?",
+    "Neredesiniz?", "Beylikdüzü dışında hizmet veriyor musunuz?", "İstanbul'un her yerine geliyor musunuz?",
+    "Tadilat ne kadar sürüyor?", "Proje kaç günde hazırlanıyor?", "Ne zaman başlayabilirsiniz?",
+    "İç mimarlık nedir?", "Mimar ile çalışmanın avantajı nedir?", "3D çizim yapıyor musunuz?",
+    "Ruhsat projesi hazırlıyor musunuz?", "Uygulama yapıyor musunuz?", "Telefon", "Mail", "WhatsApp", "Adres", "Konum",
+    "Projelerinizi nereden görebilirim?", "Hangi alanlarda hizmet veriyorsunuz?"
+  ];
+
   const answers = [
     {
-      keys:["hizmet","ne yap","neler","iç mimarlık","mimarlık","dekorasyon","tadilat","anahtar teslim","uygulama"],
-      text:"EMAK Mimarlık; İstanbul genelinde mimari tasarım, iç mimarlık, dekorasyon ve anahtar teslim uygulama süreçlerinde hizmet verir. Konut ve ticari alanlarda fikir aşamasından uygulamaya kadar süreci profesyonel şekilde yönetir."
+      keys:["merhaba","selam","iyi gunler","iyi günler"],
+      text:`Merhaba, ben EMAK Asistan. Size hizmetler, teklif, keşif, konum, süre ve projeler hakkında hızlıca yardımcı olabilirim.<br><br><span class="emak-chat-note">${businessStatus()}</span>`,
+      actions:["services","quote","whatsapp"]
     },
     {
-      keys:["fiyat","ücret","maliyet","kaç para","teklif","metrekare","m2"],
-      text:"Fiyatlandırma; alanın metrekaresi, kapsamı, malzeme tercihi ve uygulama detaylarına göre değişir. En doğru teklif için kısa bir keşif/görüşme yapılması gerekir. İsterseniz bilgilerinizi bırakın, EMAK ekibi size dönüş yapsın."
+      keys:["hizmet","ne yap","neler","hangi alan","mimarlık","mimari","ic mimarlik","iç mimarlık","dekorasyon","tadilat","uygulama","anahtar teslim"],
+      text:"EMAK Mimarlık & Dekorasyon; İstanbul genelinde mimari tasarım, iç mimarlık, dekorasyon ve anahtar teslim uygulama süreçlerinde hizmet verir. Konut ve ticari alanlarda fikir aşamasından uygulamaya kadar süreci bütüncül şekilde yönetir.",
+      actions:["services","projects","quote"]
     },
     {
-      keys:["keşif","kesif","randevu","görüşme","gorusme","ücretsiz","ucretsiz"],
-      text:"Keşif ve ön görüşme için telefon, WhatsApp veya iletişim formu üzerinden ulaşabilirsiniz. İstanbul genelinde proje ihtiyacına göre yönlendirme yapılır."
+      keys:["anahtar teslim","komple tadilat","baştan sona","bastan sona"],
+      text:"Evet. Tasarımdan uygulamaya kadar tüm süreci planlayarak anahtar teslim ilerleyebiliriz. Kapsam; keşif, ihtiyaç analizi, tasarım, malzeme seçimi, uygulama planı ve saha süreci olarak netleştirilir.",
+      actions:["quote","whatsapp","projects"]
     },
     {
-      keys:["adres","nerede","konum","ofis","harita","yol"],
-      text:"Operasyon merkezimiz Beylikdüzü Skyport Residence'tadır. Adres: Yakuplu Mah. Hürriyet Blv. Skyport Residence No:1 İç Kapı No:151 Beylikdüzü / İstanbul. İstanbul genelinde hizmet veriyoruz."
+      keys:["sadece tasarım","sadece tasarim","tasarım hizmeti","tasarim hizmeti"],
+      text:"Evet, yalnızca tasarım/projelendirme hizmeti de alınabilir. İhtiyaca göre konsept tasarım, yerleşim planı, 3D görselleştirme ve uygulama çizimleri hazırlanabilir.",
+      actions:["quote","whatsapp"]
     },
     {
-      keys:["telefon","ara","numara","iletişim","iletisim"],
-      text:"Bize 0 (532) 120 47 85 numarasından ulaşabilirsiniz. Dilerseniz WhatsApp üzerinden de hızlıca mesaj gönderebilirsiniz."
+      keys:["mobilya","dolap","özel üretim","ozel uretim"],
+      text:"Evet, projeye göre mobilya tasarımı ve uygulama çizimleri hazırlanabilir. Ölçü, kullanım ihtiyacı, malzeme ve stil birlikte değerlendirilerek en uygun çözüm oluşturulur.",
+      actions:["quote","whatsapp"]
+    },
+    {
+      keys:["villa","ofis","kafe","cafe","restoran","restaurant","ticari","mağaza","magaza","konut","daire"],
+      text:"Konut ve ticari alanlarda tasarım, danışmanlık ve uygulama süreçleri için destek veriyoruz. Villa, daire, ofis, kafe/restoran ve benzeri alanlarda proje kapsamına göre ilerlenebilir.",
+      actions:["projects","quote","whatsapp"]
+    },
+    {
+      keys:["fiyat","ücret","ucret","maliyet","kaç para","kac para","ortalama fiyat","teklif","metrekare","m2"],
+      text:"Fiyatlandırma; alanın metrekaresi, kapsamı, malzeme tercihi, işçilik detayları ve uygulama süresine göre değişir. En doğru fiyat için kısa bir keşif/görüşme yapılması gerekir.",
+      lead:true,
+      actions:["quote","whatsapp"]
+    },
+    {
+      keys:["ödeme","odeme","taksit","peşin","pesin"],
+      text:"Ödeme planı proje kapsamına göre belirlenir. Uygulama başlamadan önce kapsam, iş programı ve ödeme adımları netleştirilerek ilerlenir.",
+      lead:true,
+      actions:["whatsapp","quote"]
+    },
+    {
+      keys:["keşif","kesif","randevu","görüşme","gorusme","ücretsiz keşif","ucretsiz kesif","ücretsiz","ucretsiz"],
+      text:"Keşif ve ön görüşme için telefon, WhatsApp veya iletişim formu üzerinden ulaşabilirsiniz. Projenizin konumu ve ihtiyacına göre size en uygun yönlendirme yapılır.",
+      lead:true,
+      actions:["whatsapp","call","quote"]
+    },
+    {
+      keys:["adres","nerede","konum","ofis","harita","yol","yol tarifi","ulaşım","ulasim"],
+      text:"Operasyon merkezimiz Beylikdüzü Skyport Residence'tadır. İstanbul genelinde hizmet vermekteyiz.<br><br><strong>Adres:</strong><br>Yakuplu Mah. Hürriyet Blv. Skyport Residence No:1 İç Kapı No:151<br>Beylikdüzü / İstanbul",
+      actions:["route","whatsapp","call"]
+    },
+    {
+      keys:["beylikdüzü dışında","beylikduzu disinda","istanbul","her yere","hizmet alanı","hizmet alani","avcılar","avcilar","büyükçekmece","buyukcekmece","bahçeşehir","bahcesehir","kartal","kadıköy","kadikoy","maltepe","başakşehir","basaksehir"],
+      text:"Evet. Ofis konumumuz Beylikdüzü’nde olsa da hizmet alanımız İstanbul geneline yayılır. Projenizin bulunduğu ilçeyi paylaşırsanız uygun keşif/görüşme planı yapılabilir.",
+      actions:["quote","whatsapp","route"]
+    },
+    {
+      keys:["kaç gün","kac gun","kaç hafta","kac hafta","süre","sure","zaman","teslim","ne kadar sürer","ne kadar surer","ne zaman başlayabilirsiniz","baslayabilirsiniz"],
+      text:"Süre; alanın büyüklüğüne, iş kapsamına, malzeme tedarikine ve uygulama yoğunluğuna göre değişir. Ön görüşme sonrası daha net bir iş takvimi paylaşılır.",
+      lead:true,
+      actions:["quote","whatsapp"]
+    },
+    {
+      keys:["iç mimarlık nedir","ic mimarlik nedir"],
+      text:"İç mimarlık; bir mekânın estetik, fonksiyon, kullanım alışkanlığı, malzeme, ışık ve uygulama detaylarıyla birlikte bütüncül olarak tasarlanmasıdır. Amaç yalnızca güzel görünen değil, doğru çalışan alanlar üretmektir.",
+      actions:["services","projects"]
+    },
+    {
+      keys:["mimar ile çalışmanın avantajı","mimar ile calismanin avantaji","neden mimar","avantaj"],
+      text:"Mimar veya tasarımcıyla çalışmak; ölçü, planlama, malzeme seçimi, bütçe kontrolü, zaman yönetimi ve uygulama kalitesini daha güvenli hale getirir. Böylece sürpriz maliyet ve uygulama hatası riski azalır.",
+      actions:["services","quote","projects"]
+    },
+    {
+      keys:["3d","3d çizim","3d cizim","render","görselleştirme","gorsellestirme","tasarımdan gerçeğe","tasarimdan gercege"],
+      text:"Evet, 3D tasarım ve görselleştirme ile proje uygulama öncesinde daha net görülebilir. Sitedeki ‘3D Tasarımdan Gerçeğe’ bölümünden örnekleri inceleyebilirsiniz.",
+      actions:["projects","quote","whatsapp"]
+    },
+    {
+      keys:["ruhsat","proje çizimi","proje cizimi","uygulama çizimi","uygulama cizimi","teknik çizim","teknik cizim"],
+      text:"Proje kapsamına göre mimari çizim, uygulama çizimi, yerleşim planı ve teknik detay desteği sağlanabilir. Ruhsat/proje ihtiyacınız varsa kapsamı birlikte netleştirmek en doğru yol olur.",
+      lead:true,
+      actions:["quote","whatsapp"]
+    },
+    {
+      keys:["telefon","ara","numara"],
+      text:`Bize <strong>${phoneDisplay}</strong> numarasından ulaşabilirsiniz. Dilerseniz tek tıkla arayabilir veya WhatsApp üzerinden mesaj gönderebilirsiniz.`,
+      actions:["call","whatsapp"]
+    },
+    {
+      keys:["mail","e-posta","eposta","email"],
+      text:"E-posta adresimiz: <strong>emakmimari@gmail.com</strong>. Dilerseniz teklif ve proje bilgilerinizi mail yoluyla da iletebilirsiniz.",
+      actions:["email","quote"]
+    },
+    {
+      keys:["whatsapp","wp","mesaj"],
+      text:"WhatsApp üzerinden hızlıca iletişime geçebilirsiniz. Mesajınız otomatik olarak proje görüşmesi talebi şeklinde hazırlanır.",
+      actions:["whatsapp","call"]
     },
     {
       keys:["instagram","sosyal","profil"],
-      text:"Instagram hesabımız: @emak_mimarlik. Güncel çalışmalarımızı ve paylaşımlarımızı oradan da inceleyebilirsiniz."
+      text:"Instagram hesabımız: <strong>@emak_mimarlik</strong>. Güncel çalışmalarımızı ve paylaşımlarımızı oradan da inceleyebilirsiniz.",
+      actions:["instagram","projects"]
     },
     {
-      keys:["3d","tasarım","tasarim","render","görselleştirme","gorsellestirme","tasarımdan gerçeğe"],
-      text:"Evet, 3D tasarım ve görselleştirme süreciyle proje uygulama öncesinde daha net görülebilir. Sitedeki ‘3D Tasarımdan Gerçeğe’ bölümünden örnekleri inceleyebilirsiniz."
-    },
-    {
-      keys:["kaç gün","kaç hafta","süre","zaman","teslim","ne kadar sürer","sure"],
-      text:"Proje süresi; işin kapsamına, uygulama alanına ve malzeme tedarik sürecine göre değişir. Ön görüşme sonrası daha net bir takvim paylaşılır."
-    },
-    {
-      keys:["bölge","bolge","istanbul","beylikdüzü","avcılar","esen yurt","esen yurt","hizmet alanı","nerelere"],
-      text:"Ofis konumumuz Beylikdüzü’nde olsa da hizmet alanımız İstanbul geneline yayılır. Projenizin konumunu paylaşırsanız uygun yönlendirme yapılır."
+      keys:["proje","projeler","örnek","ornek","referans","önce sonra","once sonra"],
+      text:"Projelerimizi ve önce/sonra karşılaştırmalarını web sitemizde inceleyebilirsiniz. Ayrıca ‘3D Tasarımdan Gerçeğe’ bölümü uygulama öncesi ve sonrası süreci daha net gösterir.",
+      actions:["projects","quote","whatsapp"]
     }
   ];
+
+  const relevantKeywords = [
+    ...answers.flatMap(a => a.keys),
+    "ev", "mekan", "mekân", "alan", "dizayn", "tasarla", "yenileme", "proje", "danışmanlık", "danismanlik", "emak"
+  ].map(normalize);
+
+  const isProbablyRelevant = (question) => {
+    const q = normalize(question);
+    if (q.length < 3) return true;
+    return relevantKeywords.some(k => q.includes(k));
+  };
+
+  const getAnswer = (question) => {
+    const q = normalize(question);
+    return answers.find(item => item.keys.some(k => q.includes(normalize(k))));
+  };
 
   const launcher = document.createElement("button");
   launcher.className = "emak-chat-launcher";
@@ -304,14 +443,7 @@ if (topBtn) {
       <button class="emak-chat-close" type="button" aria-label="Sohbeti kapat">×</button>
     </div>
     <div class="emak-chat-messages" role="log" aria-live="polite"></div>
-    <div class="emak-chat-quick">
-      <button class="chat-quick-btn" type="button" data-chat="Hizmetleriniz neler?">Hizmetler</button>
-      <button class="chat-quick-btn" type="button" data-chat="Teklif almak istiyorum">Teklif</button>
-      <button class="chat-quick-btn" type="button" data-chat="Keşif randevusu almak istiyorum">Keşif</button>
-      <button class="chat-quick-btn" type="button" data-chat="Ofis adresiniz nerede?">Adres</button>
-      <button class="chat-quick-btn" type="button" data-chat="3D tasarım yapıyor musunuz?">3D Tasarım</button>
-      <button class="chat-quick-btn" type="button" data-action="lead">Beni arasınlar</button>
-    </div>
+    <div class="emak-chat-suggestions" hidden></div>
     <form class="emak-chat-input">
       <input type="text" name="chatMessage" placeholder="Sorunuzu yazın..." autocomplete="off" aria-label="Mesajınızı yazın">
       <button class="emak-chat-send" type="submit" aria-label="Mesaj gönder">›</button>
@@ -325,27 +457,57 @@ if (topBtn) {
   const inputForm = panel.querySelector(".emak-chat-input");
   const input = inputForm.querySelector("input");
   const close = panel.querySelector(".emak-chat-close");
+  const suggestions = panel.querySelector(".emak-chat-suggestions");
 
   const scrollMessages = () => { messages.scrollTop = messages.scrollHeight; };
-  const addMessage = (text, type = "bot", html = false) => {
+  const addMessage = (content, type = "bot", html = false) => {
     const msg = document.createElement("div");
     msg.className = `emak-msg ${type}`;
-    if (html) msg.innerHTML = text;
-    else msg.textContent = text;
+    if (html) msg.innerHTML = content;
+    else msg.textContent = content;
     messages.appendChild(msg);
     scrollMessages();
     return msg;
   };
+  const addTyping = () => addMessage(`<span class="typing-dots"><i></i><i></i><i></i></span>`, "bot typing", true);
   const typingThen = (fn) => {
-    const typing = addMessage("Yazıyor...", "bot");
-    setTimeout(() => { typing.remove(); fn(); }, 420);
+    const typing = addTyping();
+    setTimeout(() => { typing.remove(); fn(); }, 800);
   };
-  const normalize = (str) => str.toLocaleLowerCase("tr-TR").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  const getAnswer = (question) => {
-    const q = normalize(question);
-    return answers.find(item => item.keys.some(k => q.includes(normalize(k))));
+
+  const showSuggestions = (value) => {
+    const q = normalize(value);
+    if (!q || q.length < 2) {
+      suggestions.hidden = true;
+      suggestions.innerHTML = "";
+      return;
+    }
+    const matches = questionBank.filter(item => normalize(item).includes(q)).slice(0, 5);
+    if (!matches.length) {
+      suggestions.hidden = true;
+      suggestions.innerHTML = "";
+      return;
+    }
+    suggestions.innerHTML = matches.map(item => `<button type="button" data-suggestion="${item.replace(/"/g, '&quot;')}">${item}</button>`).join("");
+    suggestions.hidden = false;
   };
-  const whatsappLink = (text = defaultWhatsappText) => whatsappUrl + encodeURIComponent(text);
+
+  const welcomeHtml = () => `
+    <strong>👋 Merhaba!</strong><br><br>
+    Ben <strong>EMAK Asistan</strong>. Size birkaç saniye içinde yardımcı olabilirim.<br><br>
+    İsterseniz aşağıdaki konulardan birini seçebilir veya sorunuzu yazabilirsiniz.
+    <div class="emak-chat-cards">
+      <button type="button" data-chat="Anahtar teslim yapıyor musunuz?">🏡 <span>Anahtar Teslim</span></button>
+      <button type="button" data-chat="İç mimarlık nedir?">📐 <span>İç Mimarlık</span></button>
+      <button type="button" data-chat="Teklif almak istiyorum">💰 <span>Teklif Al</span></button>
+      <button type="button" data-chat="Neredesiniz?">📍 <span>Konum</span></button>
+      <button type="button" data-chat="Telefon">📞 <span>İletişim</span></button>
+      <button type="button" data-chat="Projelerinizi nereden görebilirim?">⭐⭐ <span>Projeler</span></button>
+    </div>
+    <span class="emak-chat-note">${businessStatus()}</span>
+  `;
+
+  const finalPrompt = () => `<span class="emak-chat-note">Başka yardımcı olabileceğim bir konu var mı?</span>${actionButtons()}`;
 
   const showLeadForm = (reason = "Canlı destek talebi") => {
     const wrap = document.createElement("div");
@@ -390,18 +552,28 @@ if (topBtn) {
   };
 
   const handleQuestion = (question) => {
-    addMessage(question, "user");
-    const answer = getAnswer(question);
+    const clean = question.trim();
+    if (!clean) return;
+    addMessage(clean, "user");
+    suggestions.hidden = true;
+    suggestions.innerHTML = "";
+
+    const answer = getAnswer(clean);
     typingThen(() => {
       if (answer) {
-        addMessage(answer.text, "bot");
-        if (/teklif|fiyat|ücret|ucret|keşif|kesif|randevu/i.test(question)) {
-          showLeadForm(question);
-        }
-      } else {
-        addMessage("Bu konuda sizi yanlış yönlendirmek istemem. Talebinizi bize iletin; EMAK ekibi size en kısa sürede dönüş yapsın.", "bot");
-        showLeadForm(question);
+        addMessage(`${answer.text}${answer.actions ? actionButtons(answer.actions) : ""}`, "bot", true);
+        if (answer.lead) showLeadForm(clean);
+        else addMessage(finalPrompt(), "bot", true);
+        return;
       }
+
+      if (!isProbablyRelevant(clean)) {
+        addMessage(`Ben yalnızca EMAK Mimarlık hizmetleri hakkında yardımcı olabiliyorum. Mimarlık, iç mimarlık, dekorasyon, tadilat ve anahtar teslim projeler hakkında sorularınızı memnuniyetle cevaplayabilirim.${actionButtons(["services","whatsapp","call"])}`, "bot", true);
+        return;
+      }
+
+      addMessage(`Bu konuda sizi yanlış yönlendirmek istemem. Talebinizi bize iletin; EMAK ekibi size en kısa sürede dönüş yapsın.${actionButtons(["whatsapp","quote","call"])}`, "bot", true);
+      showLeadForm(clean);
     });
   };
 
@@ -410,22 +582,34 @@ if (topBtn) {
     if (panel.classList.contains("show")) {
       if (!messages.dataset.started) {
         messages.dataset.started = "true";
-        addMessage("Merhaba, EMAK Mimarlık canlı destek asistanıyım. Hizmetler, teklif, keşif, adres veya 3D tasarım hakkında hızlıca yardımcı olabilirim.", "bot");
+        addMessage(welcomeHtml(), "bot", true);
       }
       setTimeout(() => input.focus(), 150);
     }
   });
+
   close.addEventListener("click", () => panel.classList.remove("show"));
-  panel.querySelectorAll(".chat-quick-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (btn.dataset.action === "lead") {
-        addMessage("Beni arasınlar", "user");
-        typingThen(() => showLeadForm("Canlı destek üzerinden aranma talebi"));
-      } else {
-        handleQuestion(btn.dataset.chat || btn.textContent);
-      }
-    });
+
+  messages.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-chat]");
+    if (btn) handleQuestion(btn.dataset.chat || btn.textContent);
   });
+
+  suggestions.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-suggestion]");
+    if (!btn) return;
+    input.value = "";
+    handleQuestion(btn.dataset.suggestion);
+  });
+
+  input.addEventListener("input", () => showSuggestions(input.value));
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      suggestions.hidden = true;
+      suggestions.innerHTML = "";
+    }
+  });
+
   inputForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const value = input.value.trim();
@@ -433,4 +617,4 @@ if (topBtn) {
     input.value = "";
     handleQuestion(value);
   });
-})();
+})();;

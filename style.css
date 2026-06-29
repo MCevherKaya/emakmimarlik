@@ -1528,3 +1528,88 @@ h1{font-size:clamp(46px,6.4vw,80px);line-height:1.03;letter-spacing:-.04em;color
   .emak-chat-panel{right:14px;bottom:140px;width:calc(100vw - 28px);max-height:calc(100vh - 112px);border-radius:24px}
   .emak-chat-messages{max-height:330px}
 }
+
+/* SMART CHAT SUPPORT V2 - premium assistant upgrades */
+.floating-actions{bottom:96px;gap:14px}
+.emak-chat-launcher{bottom:22px;right:22px;z-index:1260}
+.emak-chat-panel{bottom:94px;right:22px;z-index:1261;max-height:min(720px,calc(100vh - 116px))}
+.emak-chat-messages{min-height:320px;max-height:450px;scrollbar-width:thin;scrollbar-color:rgba(214,173,97,.45) rgba(255,255,255,.04)}
+.emak-chat-messages::-webkit-scrollbar{width:7px}
+.emak-chat-messages::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:999px}
+.emak-chat-messages::-webkit-scrollbar-thumb{background:rgba(214,173,97,.45);border-radius:999px}
+.emak-chat-cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.emak-chat-cards button{
+  border:1px solid rgba(214,173,97,.24);
+  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+  color:#fff2d4;
+  border-radius:16px;
+  padding:12px 10px;
+  min-height:58px;
+  text-align:left;
+  cursor:pointer;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  transition:.2s ease;
+}
+.emak-chat-cards button:hover{transform:translateY(-2px);border-color:rgba(214,173,97,.55);background:rgba(214,173,97,.10)}
+.emak-chat-cards span{font-size:12px;line-height:1.25}
+.emak-chat-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.emak-action{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(214,173,97,.25);
+  background:rgba(255,255,255,.05);
+  color:#fff2d4!important;
+  text-decoration:none!important;
+  border-radius:999px;
+  padding:9px 11px;
+  font-size:12px;
+  font-weight:900;
+  line-height:1;
+  transition:.2s ease;
+}
+.emak-action:hover{transform:translateY(-2px);border-color:rgba(214,173,97,.58);background:rgba(214,173,97,.12)}
+.emak-action.whatsapp{background:linear-gradient(135deg,#1f6f46,#0b2b1b);border-color:rgba(85,255,160,.28);color:#fff!important}
+.emak-chat-suggestions{
+  margin:0 18px 8px;
+  padding:8px;
+  border:1px solid rgba(214,173,97,.16);
+  border-radius:18px;
+  background:rgba(5,7,10,.78);
+  box-shadow:0 16px 40px rgba(0,0,0,.28);
+  display:grid;
+  gap:6px;
+}
+.emak-chat-suggestions[hidden]{display:none!important}
+.emak-chat-suggestions button{
+  width:100%;
+  text-align:left;
+  border:0;
+  border-radius:12px;
+  background:rgba(255,255,255,.045);
+  color:#ede4d2;
+  padding:10px 12px;
+  cursor:pointer;
+  font-weight:750;
+  font-size:12px;
+}
+.emak-chat-suggestions button:hover{background:rgba(214,173,97,.12);color:#fff2d4}
+.emak-msg.typing{padding:12px 14px;max-width:80px}
+.typing-dots{display:inline-flex;gap:5px;align-items:center;height:16px}
+.typing-dots i{width:6px;height:6px;border-radius:50%;background:#d6ad61;opacity:.45;animation:typingDot 1s infinite ease-in-out}
+.typing-dots i:nth-child(2){animation-delay:.15s}
+.typing-dots i:nth-child(3){animation-delay:.30s}
+@keyframes typingDot{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-4px);opacity:1}}
+.emak-msg.bot strong{color:#fff2d4}
+.emak-lead-form button:disabled{opacity:.72;cursor:not-allowed}
+
+@media(max-width:700px){
+  .floating-actions{bottom:82px;right:14px}
+  .emak-chat-launcher{right:14px;bottom:14px;min-height:52px;padding:0 14px}
+  .emak-chat-panel{right:14px;bottom:78px;width:calc(100vw - 28px);max-height:calc(100vh - 94px);border-radius:24px}
+  .emak-chat-messages{min-height:260px;max-height:360px}
+  .emak-chat-cards{grid-template-columns:1fr}
+}
