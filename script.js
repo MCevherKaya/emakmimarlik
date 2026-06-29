@@ -175,3 +175,36 @@ if (topBtn) {
   window.addEventListener("scroll", () => topBtn.classList.toggle("show", window.scrollY > 450));
   topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 }
+
+// Cookie consent banner
+(function initCookieConsent(){
+  const storageKey = "emak_cookie_consent";
+  if (localStorage.getItem(storageKey)) return;
+
+  const banner = document.createElement("div");
+  banner.className = "cookie-banner";
+  banner.setAttribute("role", "dialog");
+  banner.setAttribute("aria-live", "polite");
+  banner.innerHTML = `
+    <div>
+      <strong>🍪 Çerez Kullanımı</strong>
+      <p>Bu web sitesi deneyiminizi iyileştirmek, form ve ziyaretçi analizlerini değerlendirmek için çerezler kullanır. Detaylar için <a href="cerez-politikasi.html">Çerez Politikası</a> sayfamızı inceleyebilirsiniz.</p>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-btn reject" type="button">Reddet</button>
+      <button class="cookie-btn accept" type="button">Kabul Et</button>
+    </div>
+  `;
+  document.body.appendChild(banner);
+
+  requestAnimationFrame(() => banner.classList.add("show"));
+
+  const closeBanner = (value) => {
+    localStorage.setItem(storageKey, value);
+    banner.classList.remove("show");
+    setTimeout(() => banner.remove(), 350);
+  };
+
+  banner.querySelector(".accept")?.addEventListener("click", () => closeBanner("accepted"));
+  banner.querySelector(".reject")?.addEventListener("click", () => closeBanner("rejected"));
+})();
