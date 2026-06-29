@@ -1,0 +1,21 @@
+{
+  "name": "EMAK Mimarlık & Dekorasyon",
+  "short_name": "EMAK Mimarlık",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080a0e",
+  "theme_color": "#090b0f",
+  "description": "İstanbul genelinde mimari tasarım, iç mimarlık, dekorasyon ve anahtar teslim uygulama hizmetleri.",
+  "icons": [
+    {
+      "src": "/assets/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

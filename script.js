@@ -152,6 +152,12 @@ function initContactForms() {
           status.className = "form-status show success";
           status.innerHTML = "✅ Talebiniz başarıyla alınmıştır.<br>En kısa sürede sizinle iletişime geçeceğiz.";
         }
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "form_submit", {
+            event_category: "lead",
+            event_label: "contact_form"
+          });
+        }
         form.reset();
       } catch (error) {
         if (status) {
@@ -176,10 +182,30 @@ if (topBtn) {
   topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 }
 
-// Cookie consent banner
+// Cookie consent banner + real Analytics consent control
 (function initCookieConsent(){
   const storageKey = "emak_cookie_consent";
-  if (localStorage.getItem(storageKey)) return;
+  const analyticsId = "G-P24ZPV3R5X";
+
+  const loadAnalytics = () => {
+    if (window.__emakAnalyticsLoaded) return;
+    window.__emakAnalyticsLoaded = true;
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${analyticsId}`;
+    document.head.appendChild(script);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    window.gtag("js", new Date());
+    window.gtag("config", analyticsId, { anonymize_ip: true });
+  };
+
+  const consent = localStorage.getItem(storageKey);
+  if (consent === "accepted") {
+    loadAnalytics();
+    return;
+  }
+  if (consent === "rejected") return;
 
   const banner = document.createElement("div");
   banner.className = "cookie-banner";
@@ -188,7 +214,7 @@ if (topBtn) {
   banner.innerHTML = `
     <div>
       <strong>🍪 Çerez Kullanımı</strong>
-      <p>Bu web sitesi deneyiminizi iyileştirmek, form ve ziyaretçi analizlerini değerlendirmek için çerezler kullanır. Detaylar için <a href="cerez-politikasi.html">Çerez Politikası</a> sayfamızı inceleyebilirsiniz.</p>
+      <p>Deneyiminizi iyileştirmek ve ziyaretçi analizlerini değerlendirmek için analitik çerezler kullanıyoruz. Reddederseniz Google Analytics çalışmaz. Detaylar için <a href="cerez-politikasi.html">Çerez Politikası</a> sayfamızı inceleyebilirsiniz.</p>
     </div>
     <div class="cookie-actions">
       <button class="cookie-btn reject" type="button">Reddet</button>
@@ -201,6 +227,7 @@ if (topBtn) {
 
   const closeBanner = (value) => {
     localStorage.setItem(storageKey, value);
+    if (value === "accepted") loadAnalytics();
     banner.classList.remove("show");
     setTimeout(() => banner.remove(), 350);
   };
