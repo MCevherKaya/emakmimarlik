@@ -235,3 +235,202 @@ if (topBtn) {
   banner.querySelector(".accept")?.addEventListener("click", () => closeBanner("accepted"));
   banner.querySelector(".reject")?.addEventListener("click", () => closeBanner("rejected"));
 })();
+
+// Smart EMAK Chat Support: guided assistant + lead capture + WhatsApp handoff
+(function initEmakSmartChat(){
+  if (document.querySelector(".emak-chat-launcher")) return;
+
+  const accessKey = "251475d5-185d-41c1-bb67-a38122b4efb8";
+  const whatsappUrl = "https://wa.me/905321204785?text=";
+  const defaultWhatsappText = "Merhaba, EMAK Mimarlık web sitesindeki canlı destekten geliyorum. Projem hakkında bilgi almak istiyorum.";
+
+  const answers = [
+    {
+      keys:["hizmet","ne yap","neler","iç mimarlık","mimarlık","dekorasyon","tadilat","anahtar teslim","uygulama"],
+      text:"EMAK Mimarlık; İstanbul genelinde mimari tasarım, iç mimarlık, dekorasyon ve anahtar teslim uygulama süreçlerinde hizmet verir. Konut ve ticari alanlarda fikir aşamasından uygulamaya kadar süreci profesyonel şekilde yönetir."
+    },
+    {
+      keys:["fiyat","ücret","maliyet","kaç para","teklif","metrekare","m2"],
+      text:"Fiyatlandırma; alanın metrekaresi, kapsamı, malzeme tercihi ve uygulama detaylarına göre değişir. En doğru teklif için kısa bir keşif/görüşme yapılması gerekir. İsterseniz bilgilerinizi bırakın, EMAK ekibi size dönüş yapsın."
+    },
+    {
+      keys:["keşif","kesif","randevu","görüşme","gorusme","ücretsiz","ucretsiz"],
+      text:"Keşif ve ön görüşme için telefon, WhatsApp veya iletişim formu üzerinden ulaşabilirsiniz. İstanbul genelinde proje ihtiyacına göre yönlendirme yapılır."
+    },
+    {
+      keys:["adres","nerede","konum","ofis","harita","yol"],
+      text:"Operasyon merkezimiz Beylikdüzü Skyport Residence'tadır. Adres: Yakuplu Mah. Hürriyet Blv. Skyport Residence No:1 İç Kapı No:151 Beylikdüzü / İstanbul. İstanbul genelinde hizmet veriyoruz."
+    },
+    {
+      keys:["telefon","ara","numara","iletişim","iletisim"],
+      text:"Bize 0 (532) 120 47 85 numarasından ulaşabilirsiniz. Dilerseniz WhatsApp üzerinden de hızlıca mesaj gönderebilirsiniz."
+    },
+    {
+      keys:["instagram","sosyal","profil"],
+      text:"Instagram hesabımız: @emak_mimarlik. Güncel çalışmalarımızı ve paylaşımlarımızı oradan da inceleyebilirsiniz."
+    },
+    {
+      keys:["3d","tasarım","tasarim","render","görselleştirme","gorsellestirme","tasarımdan gerçeğe"],
+      text:"Evet, 3D tasarım ve görselleştirme süreciyle proje uygulama öncesinde daha net görülebilir. Sitedeki ‘3D Tasarımdan Gerçeğe’ bölümünden örnekleri inceleyebilirsiniz."
+    },
+    {
+      keys:["kaç gün","kaç hafta","süre","zaman","teslim","ne kadar sürer","sure"],
+      text:"Proje süresi; işin kapsamına, uygulama alanına ve malzeme tedarik sürecine göre değişir. Ön görüşme sonrası daha net bir takvim paylaşılır."
+    },
+    {
+      keys:["bölge","bolge","istanbul","beylikdüzü","avcılar","esen yurt","esen yurt","hizmet alanı","nerelere"],
+      text:"Ofis konumumuz Beylikdüzü’nde olsa da hizmet alanımız İstanbul geneline yayılır. Projenizin konumunu paylaşırsanız uygun yönlendirme yapılır."
+    }
+  ];
+
+  const launcher = document.createElement("button");
+  launcher.className = "emak-chat-launcher";
+  launcher.type = "button";
+  launcher.setAttribute("aria-label", "Canlı destek sohbetini aç");
+  launcher.innerHTML = `<span class="chat-dot"></span><span class="chat-icon">💬</span><span><small>EMAK Asistan</small><strong>Canlı Destek</strong></span>`;
+
+  const panel = document.createElement("div");
+  panel.className = "emak-chat-panel";
+  panel.setAttribute("aria-label", "EMAK Mimarlık canlı destek");
+  panel.innerHTML = `
+    <div class="emak-chat-head">
+      <div class="emak-chat-brand">
+        <div class="emak-chat-avatar">E</div>
+        <div class="emak-chat-title">
+          <strong>EMAK Asistan</strong>
+          <span>Projeniz için hızlı yönlendirme</span>
+        </div>
+      </div>
+      <button class="emak-chat-close" type="button" aria-label="Sohbeti kapat">×</button>
+    </div>
+    <div class="emak-chat-messages" role="log" aria-live="polite"></div>
+    <div class="emak-chat-quick">
+      <button class="chat-quick-btn" type="button" data-chat="Hizmetleriniz neler?">Hizmetler</button>
+      <button class="chat-quick-btn" type="button" data-chat="Teklif almak istiyorum">Teklif</button>
+      <button class="chat-quick-btn" type="button" data-chat="Keşif randevusu almak istiyorum">Keşif</button>
+      <button class="chat-quick-btn" type="button" data-chat="Ofis adresiniz nerede?">Adres</button>
+      <button class="chat-quick-btn" type="button" data-chat="3D tasarım yapıyor musunuz?">3D Tasarım</button>
+      <button class="chat-quick-btn" type="button" data-action="lead">Beni arasınlar</button>
+    </div>
+    <form class="emak-chat-input">
+      <input type="text" name="chatMessage" placeholder="Sorunuzu yazın..." autocomplete="off" aria-label="Mesajınızı yazın">
+      <button class="emak-chat-send" type="submit" aria-label="Mesaj gönder">›</button>
+    </form>
+  `;
+
+  document.body.appendChild(launcher);
+  document.body.appendChild(panel);
+
+  const messages = panel.querySelector(".emak-chat-messages");
+  const inputForm = panel.querySelector(".emak-chat-input");
+  const input = inputForm.querySelector("input");
+  const close = panel.querySelector(".emak-chat-close");
+
+  const scrollMessages = () => { messages.scrollTop = messages.scrollHeight; };
+  const addMessage = (text, type = "bot", html = false) => {
+    const msg = document.createElement("div");
+    msg.className = `emak-msg ${type}`;
+    if (html) msg.innerHTML = text;
+    else msg.textContent = text;
+    messages.appendChild(msg);
+    scrollMessages();
+    return msg;
+  };
+  const typingThen = (fn) => {
+    const typing = addMessage("Yazıyor...", "bot");
+    setTimeout(() => { typing.remove(); fn(); }, 420);
+  };
+  const normalize = (str) => str.toLocaleLowerCase("tr-TR").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const getAnswer = (question) => {
+    const q = normalize(question);
+    return answers.find(item => item.keys.some(k => q.includes(normalize(k))));
+  };
+  const whatsappLink = (text = defaultWhatsappText) => whatsappUrl + encodeURIComponent(text);
+
+  const showLeadForm = (reason = "Canlı destek talebi") => {
+    const wrap = document.createElement("div");
+    wrap.className = "emak-msg bot";
+    wrap.innerHTML = `
+      <strong>Size dönüş yapalım.</strong><br>
+      <span class="emak-chat-note">Adınızı ve telefonunuzu bırakırsanız EMAK ekibi en kısa sürede size ulaşır.</span>
+      <form class="emak-lead-form">
+        <input name="name" type="text" placeholder="Adınız Soyadınız" required>
+        <input name="phone" type="tel" placeholder="Telefon Numaranız" required>
+        <textarea name="message" placeholder="Kısaca projenizi yazın">${reason}</textarea>
+        <button type="submit">Bilgilerimi Gönder</button>
+      </form>
+      <a class="emak-chat-whatsapp" href="${whatsappLink()}" target="_blank" rel="noopener">💬 WhatsApp'a Geç</a>
+    `;
+    messages.appendChild(wrap);
+    scrollMessages();
+
+    const form = wrap.querySelector(".emak-lead-form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector("button");
+      btn.disabled = true;
+      btn.textContent = "Gönderiliyor...";
+      const fd = new FormData(form);
+      fd.append("access_key", accessKey);
+      fd.append("subject", "EMAK Mimarlık Canlı Destek Talebi");
+      fd.append("from_name", "EMAK Canlı Destek");
+      fd.append("talep_kaynagi", "Canlı destek chatbox");
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", { method:"POST", body:fd });
+        const data = await response.json();
+        if (!data.success) throw new Error(data.message || "Gönderilemedi");
+        form.innerHTML = `<span class="emak-chat-note">✅ Talebiniz başarıyla alınmıştır. En kısa sürede sizinle iletişime geçilecektir.</span>`;
+        if (typeof window.gtag === "function") window.gtag("event", "chat_lead_submit", { event_category:"lead", event_label:"chatbox" });
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = "Bilgilerimi Gönder";
+        addMessage("❌ Talebiniz gönderilemedi. Lütfen WhatsApp üzerinden iletişime geçin.", "bot");
+      }
+    });
+  };
+
+  const handleQuestion = (question) => {
+    addMessage(question, "user");
+    const answer = getAnswer(question);
+    typingThen(() => {
+      if (answer) {
+        addMessage(answer.text, "bot");
+        if (/teklif|fiyat|ücret|ucret|keşif|kesif|randevu/i.test(question)) {
+          showLeadForm(question);
+        }
+      } else {
+        addMessage("Bu konuda sizi yanlış yönlendirmek istemem. Talebinizi bize iletin; EMAK ekibi size en kısa sürede dönüş yapsın.", "bot");
+        showLeadForm(question);
+      }
+    });
+  };
+
+  launcher.addEventListener("click", () => {
+    panel.classList.toggle("show");
+    if (panel.classList.contains("show")) {
+      if (!messages.dataset.started) {
+        messages.dataset.started = "true";
+        addMessage("Merhaba, EMAK Mimarlık canlı destek asistanıyım. Hizmetler, teklif, keşif, adres veya 3D tasarım hakkında hızlıca yardımcı olabilirim.", "bot");
+      }
+      setTimeout(() => input.focus(), 150);
+    }
+  });
+  close.addEventListener("click", () => panel.classList.remove("show"));
+  panel.querySelectorAll(".chat-quick-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (btn.dataset.action === "lead") {
+        addMessage("Beni arasınlar", "user");
+        typingThen(() => showLeadForm("Canlı destek üzerinden aranma talebi"));
+      } else {
+        handleQuestion(btn.dataset.chat || btn.textContent);
+      }
+    });
+  });
+  inputForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const value = input.value.trim();
+    if (!value) return;
+    input.value = "";
+    handleQuestion(value);
+  });
+})();
