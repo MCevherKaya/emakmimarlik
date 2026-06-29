@@ -938,19 +938,3 @@ h1{font-size:clamp(46px,6.4vw,80px);line-height:1.03;letter-spacing:-.04em;color
   .float-btn{height:48px;min-width:48px;font-size:14px;padding:0 13px}
   .float-whatsapp span{display:none}
 }
-.contact-info-card{
-  display:block;
-  text-decoration:none;
-  color:inherit;
-  transition:.25s ease;
-}
-
-.contact-info-card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(214,173,97,.55);
-  box-shadow:0 18px 50px rgba(0,0,0,.28);
-}
-
-.contact-info-card:hover strong{
-  color:var(--gold2);
-}
