@@ -9,7 +9,6 @@ document.querySelectorAll(".nav-links a").forEach((a) => {
   a.addEventListener("click", () => nav?.classList.remove("show"));
 });
 
-/* COUNTERS */
 const counters = document.querySelectorAll(".counter");
 
 const animateCounter = (counter) => {
@@ -21,11 +20,8 @@ const animateCounter = (counter) => {
     const progress = Math.min((time - start) / duration, 1);
     counter.textContent = Math.floor(progress * target);
 
-    if (progress < 1) {
-      requestAnimationFrame(update);
-    } else {
-      counter.textContent = target;
-    }
+    if (progress < 1) requestAnimationFrame(update);
+    else counter.textContent = target;
   };
 
   requestAnimationFrame(update);
@@ -47,7 +43,6 @@ if (counters.length) {
   counters.forEach((counter) => counterObserver.observe(counter));
 }
 
-/* REVEAL ANIMATION */
 const revealEls = document.querySelectorAll(".reveal");
 if (revealEls.length) {
   const revealObserver = new IntersectionObserver(
@@ -65,7 +60,6 @@ if (revealEls.length) {
   revealEls.forEach((el) => revealObserver.observe(el));
 }
 
-/* GALLERY LIGHTBOX */
 const galleryImages = document.querySelectorAll(".gallery-grid img");
 
 if (galleryImages.length) {
@@ -104,9 +98,7 @@ if (galleryImages.length) {
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && lightbox.classList.contains("show")) {
-      closeLightbox();
-    }
+    if (e.key === "Escape" && lightbox.classList.contains("show")) closeLightbox();
   });
 }
 
@@ -115,7 +107,6 @@ document.querySelectorAll(".compare-slider").forEach((slider) => {
   const range = slider.querySelector(".compare-range");
   const afterImg = slider.querySelector(".compare-img.after");
   const handle = slider.querySelector(".compare-handle");
-
   if (!range || !afterImg || !handle) return;
 
   const updateSlider = () => {
@@ -128,17 +119,11 @@ document.querySelectorAll(".compare-slider").forEach((slider) => {
   updateSlider();
 });
 
-/* HERO VIDEO AUTOPLAY + SOUND TOGGLE */
+/* HERO VIDEO SOUND TOGGLE */
 document.querySelectorAll(".hero-video-frame").forEach((frame) => {
   const video = frame.querySelector("video");
   const toggle = frame.querySelector(".video-sound-toggle");
   if (!video) return;
-
-  video.muted = true;
-  video.autoplay = true;
-  video.loop = true;
-  video.playsInline = true;
-  video.preload = "auto";
 
   const updateText = () => {
     if (!toggle) return;
@@ -146,14 +131,10 @@ document.querySelectorAll(".hero-video-frame").forEach((frame) => {
     toggle.setAttribute("aria-label", video.muted ? "Video sesini aç" : "Video sesini kapat");
   };
 
-  const playVideo = () => {
-    video.play().catch(() => {});
-  };
-
   const toggleSound = () => {
     video.muted = !video.muted;
     video.volume = 1.0;
-    playVideo();
+    video.play().catch(() => {});
     updateText();
   };
 
@@ -164,9 +145,8 @@ document.querySelectorAll(".hero-video-frame").forEach((frame) => {
 
   video.addEventListener("click", toggleSound);
 
-  playVideo();
-  setTimeout(playVideo, 500);
-  setTimeout(playVideo, 1500);
+  video.volume = 1.0;
+  video.play().catch(() => {});
   updateText();
 });
 
@@ -175,7 +155,7 @@ document.querySelectorAll(".web3forms-form").forEach((form) => {
   const status = form.querySelector(".form-status");
   const submit = form.querySelector(".form-submit");
 
-  const showStatus = (type, message) => {
+  const setStatus = (type, message) => {
     if (!status) return;
     status.className = `form-status show ${type}`;
     status.innerHTML = message;
@@ -190,40 +170,34 @@ document.querySelectorAll(".web3forms-form").forEach((form) => {
     }
 
     const originalText = submit?.textContent || "Gönder";
-
     if (submit) {
       submit.disabled = true;
       submit.textContent = "Gönderiliyor...";
     }
 
-    showStatus("", "Talebiniz gönderiliyor...");
-
-    const formData = new FormData(form);
+    setStatus("", "Talebiniz gönderiliyor...");
 
     try {
+      const formData = new FormData(form);
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: formData,
       });
-
       const data = await response.json();
 
       if (data.success) {
-        showStatus(
+        setStatus(
           "success",
           "✅ Talebiniz başarıyla alınmıştır.<br>En kısa sürede sizinle iletişime geçeceğiz."
         );
         form.reset();
       } else {
-        showStatus(
-          "error",
-          "❌ Mesaj gönderilemedi. Lütfen bilgileri kontrol edip tekrar deneyin."
-        );
+        throw new Error(data.message || "Form gönderilemedi.");
       }
     } catch (error) {
-      showStatus(
+      setStatus(
         "error",
-        "❌ Bağlantı hatası oluştu. Lütfen tekrar deneyin veya WhatsApp üzerinden iletişime geçin."
+        "❌ Bir hata oluştu. Lütfen tekrar deneyin veya WhatsApp üzerinden bize ulaşın."
       );
     } finally {
       if (submit) {
@@ -234,18 +208,14 @@ document.querySelectorAll(".web3forms-form").forEach((form) => {
   });
 });
 
-/* FLOATING BUTTONS */
-const topButton = document.querySelector(".float-top");
-
-window.addEventListener("scroll", () => {
-  if (!topButton) return;
-  if (window.scrollY > 500) {
-    topButton.classList.add("show");
-  } else {
-    topButton.classList.remove("show");
-  }
-});
-
-topButton?.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+/* FLOATING ACTIONS */
+const floatTop = document.querySelector(".float-top");
+if (floatTop) {
+  const toggleTop = () => {
+    if (window.scrollY > 500) floatTop.classList.add("show");
+    else floatTop.classList.remove("show");
+  };
+  window.addEventListener("scroll", toggleTop, { passive: true });
+  floatTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  toggleTop();
+}
