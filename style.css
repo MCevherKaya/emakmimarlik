@@ -939,33 +939,86 @@ h1{font-size:clamp(46px,6.4vw,80px);line-height:1.03;letter-spacing:-.04em;color
   .float-whatsapp span{display:none}
 }
 
-/* CONTACT FIX: clickable info cards without layout break */
-.contact-mini-card a{
-  display:block;
-  color:inherit;
-  text-decoration:none;
-  border-radius:16px;
-  transition:.25s ease;
+/* === CONTACT FINAL FIX: clickable cards without layout break === */
+.premium-contact-info{
+  min-width:0;
 }
-.contact-mini-card a strong{
-  display:block;
-  color:#fff2d4;
-  transition:.25s ease;
-}
-.contact-mini-card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(214,173,97,.52);
-  box-shadow:0 18px 50px rgba(0,0,0,.28);
-}
-.contact-mini-card:hover a strong{
-  color:var(--gold2);
+.contact-mini-list{
+  display:grid;
+  gap:14px;
+  margin-top:18px;
 }
 .contact-mini-card{
-  transition:.25s ease;
+  display:block;
+  width:100%;
+  text-decoration:none;
+  color:inherit;
+  padding:22px 24px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:rgba(255,255,255,.025);
+  margin-top:0;
+  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,background .25s ease;
+  cursor:pointer;
 }
-.botcheck{
-  position:absolute!important;
-  left:-9999px!important;
-  opacity:0!important;
-  pointer-events:none!important;
+.contact-mini-card:hover,
+.contact-mini-card:focus-visible{
+  transform:translateY(-4px);
+  border-color:rgba(214,173,97,.58);
+  background:rgba(214,173,97,.055);
+  box-shadow:0 18px 50px rgba(0,0,0,.26);
+  outline:none;
+}
+.contact-mini-card small{
+  display:block;
+  color:var(--gold);
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:11px;
+  margin-bottom:9px;
+}
+.contact-mini-card strong{
+  display:block;
+  color:#fff2d4;
+  font-size:18px;
+  line-height:1.35;
+  word-break:break-word;
+  transition:color .25s ease;
+}
+.contact-mini-card:hover strong,
+.contact-mini-card:focus-visible strong{
+  color:var(--gold2);
+}
+.premium-form{
+  min-width:0;
+}
+.form-status{
+  display:none;
+  padding:16px 18px;
+  border-radius:18px;
+  font-weight:800;
+  line-height:1.55;
+  border:1px solid rgba(214,173,97,.24);
+  background:rgba(255,255,255,.045);
+  color:#f7ecd2;
+}
+.form-status.show{display:block;}
+.form-status.success{
+  border-color:rgba(71,209,130,.42);
+  background:rgba(71,209,130,.12);
+  color:#d8ffe8;
+}
+.form-status.error{
+  border-color:rgba(255,99,99,.42);
+  background:rgba(255,99,99,.12);
+  color:#ffe0e0;
+}
+.botcheck{position:absolute!important;left:-9999px!important;opacity:0!important;}
+.form-submit:disabled{opacity:.72;cursor:not-allowed;transform:none;}
+@media(max-width:980px){
+  .contact-mini-list{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:640px){
+  .contact-mini-list{grid-template-columns:1fr;}
 }

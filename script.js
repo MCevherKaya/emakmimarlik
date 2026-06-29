@@ -9,8 +9,8 @@ document.querySelectorAll(".nav-links a").forEach((a) => {
   a.addEventListener("click", () => nav?.classList.remove("show"));
 });
 
+/* COUNTERS */
 const counters = document.querySelectorAll(".counter");
-
 const animateCounter = (counter) => {
   const target = Number(counter.dataset.target || 0);
   const duration = 1500;
@@ -19,7 +19,6 @@ const animateCounter = (counter) => {
   const update = (time) => {
     const progress = Math.min((time - start) / duration, 1);
     counter.textContent = Math.floor(progress * target);
-
     if (progress < 1) requestAnimationFrame(update);
     else counter.textContent = target;
   };
@@ -39,10 +38,10 @@ if (counters.length) {
     },
     { threshold: 0.35 }
   );
-
   counters.forEach((counter) => counterObserver.observe(counter));
 }
 
+/* REVEAL */
 const revealEls = document.querySelectorAll(".reveal");
 if (revealEls.length) {
   const revealObserver = new IntersectionObserver(
@@ -56,12 +55,11 @@ if (revealEls.length) {
     },
     { threshold: 0.12 }
   );
-
   revealEls.forEach((el) => revealObserver.observe(el));
 }
 
+/* LIGHTBOX */
 const galleryImages = document.querySelectorAll(".gallery-grid img");
-
 if (galleryImages.length) {
   const lightbox = document.createElement("div");
   lightbox.className = "lightbox";
@@ -87,19 +85,10 @@ if (galleryImages.length) {
     lightboxImg.src = "";
   };
 
-  galleryImages.forEach((img) => {
-    img.addEventListener("click", () => openLightbox(img));
-  });
-
+  galleryImages.forEach((img) => img.addEventListener("click", () => openLightbox(img)));
   closeBtn.addEventListener("click", closeLightbox);
-
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && lightbox.classList.contains("show")) closeLightbox();
-  });
+  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && lightbox.classList.contains("show")) closeLightbox(); });
 }
 
 /* BEFORE / AFTER SLIDER */
@@ -123,99 +112,93 @@ document.querySelectorAll(".compare-slider").forEach((slider) => {
 document.querySelectorAll(".hero-video-frame").forEach((frame) => {
   const video = frame.querySelector("video");
   const toggle = frame.querySelector(".video-sound-toggle");
-  if (!video) return;
+  if (!video || !toggle) return;
 
   const updateText = () => {
-    if (!toggle) return;
     toggle.textContent = video.muted ? "Sesi Aç" : "Sesi Kapat";
     toggle.setAttribute("aria-label", video.muted ? "Video sesini aç" : "Video sesini kapat");
   };
 
+  const playVideo = () => video.play().catch(() => {});
+
   const toggleSound = () => {
     video.muted = !video.muted;
-    video.volume = 1.0;
-    video.play().catch(() => {});
+    video.volume = video.muted ? 0 : 1;
+    playVideo();
     updateText();
   };
 
-  toggle?.addEventListener("click", (e) => {
+  toggle.addEventListener("click", (e) => {
     e.stopPropagation();
     toggleSound();
   });
 
   video.addEventListener("click", toggleSound);
-
-  video.volume = 1.0;
-  video.play().catch(() => {});
+  video.muted = true; // tarayıcıların otomatik oynatmayı engellememesi için ilk açılış sessizdir
+  video.volume = 0;
+  playVideo();
   updateText();
 });
 
-/* CONTACT FORM - WEB3FORMS */
+/* WEB3FORMS CONTACT FORMS */
 document.querySelectorAll(".web3forms-form").forEach((form) => {
   const status = form.querySelector(".form-status");
-  const submit = form.querySelector(".form-submit");
+  const submitButton = form.querySelector(".form-submit");
+  if (!status || !submitButton) return;
 
-  const setStatus = (type, message) => {
-    if (!status) return;
-    status.className = `form-status show ${type}`;
-    status.innerHTML = message;
-  };
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    const originalText = submit?.textContent || "Gönder";
-    if (submit) {
-      submit.disabled = true;
-      submit.textContent = "Gönderiliyor...";
-    }
-
-    setStatus("", "Talebiniz gönderiliyor...");
+    status.className = "form-status show";
+    status.textContent = "Gönderiliyor...";
+    submitButton.disabled = true;
+    submitButton.textContent = "Gönderiliyor...";
 
     try {
       const formData = new FormData(form);
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData,
+        body: formData
       });
-      const data = await response.json();
+      const result = await response.json();
 
-      if (data.success) {
-        setStatus(
-          "success",
-          "✅ Talebiniz başarıyla alınmıştır.<br>En kısa sürede sizinle iletişime geçeceğiz."
-        );
+      if (response.ok && result.success) {
+        status.className = "form-status show success";
+        status.innerHTML = "✅ Talebiniz başarıyla alınmıştır.<br>En kısa sürede sizinle iletişime geçeceğiz.";
         form.reset();
       } else {
-        throw new Error(data.message || "Form gönderilemedi.");
+        throw new Error(result.message || "Form gönderilemedi.");
       }
     } catch (error) {
-      setStatus(
-        "error",
-        "❌ Bir hata oluştu. Lütfen tekrar deneyin veya WhatsApp üzerinden bize ulaşın."
-      );
+      status.className = "form-status show error";
+      status.textContent = "❌ Bir hata oluştu. Lütfen tekrar deneyin veya WhatsApp üzerinden iletişime geçin.";
     } finally {
-      if (submit) {
-        submit.disabled = false;
-        submit.textContent = originalText;
-      }
+      submitButton.disabled = false;
+      submitButton.textContent = "Gönder";
     }
   });
 });
 
 /* FLOATING ACTIONS */
-const floatTop = document.querySelector(".float-top");
-if (floatTop) {
-  const toggleTop = () => {
-    if (window.scrollY > 500) floatTop.classList.add("show");
-    else floatTop.classList.remove("show");
-  };
-  window.addEventListener("scroll", toggleTop, { passive: true });
-  floatTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-  toggleTop();
+if (!document.querySelector(".floating-actions")) {
+  const actions = document.createElement("div");
+  actions.className = "floating-actions";
+  actions.innerHTML = `
+    <a class="float-btn float-whatsapp" href="https://wa.me/905321204785?text=Merhaba,%20EMAK%20Mimarl%C4%B1k%20ile%20projem%20hakk%C4%B1nda%20g%C3%B6r%C3%BC%C5%9Fmek%20ve%20teklif%20almak%20istiyorum." target="_blank" rel="noopener" aria-label="WhatsApp ile iletişime geç">
+      <span>💬 WhatsApp</span>
+    </a>
+    <button class="float-btn float-top" type="button" aria-label="Sayfanın üstüne çık">↑</button>
+  `;
+  document.body.appendChild(actions);
+
+  const topBtn = actions.querySelector(".float-top");
+  window.addEventListener("scroll", () => {
+    topBtn.classList.toggle("show", window.scrollY > 500);
+  });
+  topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 }
