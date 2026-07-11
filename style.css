@@ -1710,3 +1710,183 @@ h1{font-size:clamp(46px,6.4vw,80px);line-height:1.03;letter-spacing:-.04em;color
 .guide-hub-grid .guide-card.guide-card-enter{animation:guideCardEnter .32s ease both}
 @keyframes guideCardEnter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:640px){.guide-hub-hero{padding-bottom:38px}.guide-filter{gap:8px}.guide-filter button{padding:10px 14px;font-size:14px}.guide-filter-status{margin-top:-14px}}
+
+
+/* GUIDE CTA + FOOTER FINAL FIX */
+.guide-project-cta{
+  padding:34px 0 76px;
+}
+.guide-project-cta-box{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:40px;
+  padding:44px 48px;
+  border:1px solid rgba(214,173,97,.28);
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(214,173,97,.14),transparent 34%),
+    linear-gradient(135deg,rgba(19,25,34,.96),rgba(8,11,15,.98));
+  box-shadow:0 28px 80px rgba(0,0,0,.32);
+  overflow:hidden;
+}
+.guide-project-cta-copy{min-width:0}
+.guide-project-cta-copy .eyebrow{margin:0 0 12px}
+.guide-project-cta-copy h2{
+  max-width:800px;
+  margin:0 0 14px;
+  color:var(--gold2);
+  font-size:clamp(30px,4vw,48px);
+  line-height:1.12;
+}
+.guide-project-cta-copy>p:last-child{
+  max-width:760px;
+  margin:0;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.75;
+}
+.guide-project-cta-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  gap:12px;
+  max-width:500px;
+}
+.guide-project-cta-actions .btn{
+  min-width:148px;
+  text-align:center;
+  white-space:nowrap;
+}
+.guide-project-cta-actions .btn.outline{
+  border:1px solid rgba(214,173,97,.55);
+  background:transparent;
+  color:var(--gold2);
+}
+.guide-project-cta-actions .btn.outline:hover{
+  background:rgba(214,173,97,.10);
+  transform:translateY(-2px);
+}
+
+.footer{
+  padding:34px 0 44px;
+  border-top:1px solid rgba(214,173,97,.13);
+  background:linear-gradient(180deg,rgba(7,9,12,.35),rgba(5,7,10,.82));
+}
+.footer-grid{
+  border-top:0!important;
+  padding-top:0!important;
+  display:grid!important;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:28px;
+}
+.footer-grid img{
+  width:112px;
+  height:auto;
+  display:block;
+}
+.footer-grid p{
+  margin:0;
+  text-align:center;
+  color:var(--muted);
+  line-height:1.6;
+}
+.footer-grid>a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:0 20px;
+  border:1px solid rgba(214,173,97,.45);
+  border-radius:999px;
+  color:var(--gold2);
+  text-decoration:none;
+  transition:.25s ease;
+}
+.footer-grid>a:hover{
+  background:rgba(214,173,97,.10);
+  transform:translateY(-2px);
+}
+.legal-footer-links,
+.footer-legal-links{
+  margin-top:24px;
+  padding-top:22px;
+  border-top:1px solid rgba(214,173,97,.12);
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:0!important;
+  font-size:13px;
+}
+.legal-footer-links a,
+.footer-legal-links a{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  padding:7px 14px;
+  color:#bdb3a3!important;
+  font-weight:700;
+  text-decoration:none;
+  line-height:1.4;
+  transition:.22s ease;
+}
+.legal-footer-links a:not(:first-child)::before,
+.footer-legal-links a:not(:first-child)::before{
+  content:"•";
+  position:absolute;
+  left:-2px;
+  color:rgba(214,173,97,.55);
+}
+.legal-footer-links a:hover,
+.footer-legal-links a:hover{
+  color:var(--gold2)!important;
+}
+
+@media(max-width:980px){
+  .guide-project-cta-box{
+    grid-template-columns:1fr;
+    padding:38px 34px;
+  }
+  .guide-project-cta-actions{
+    justify-content:flex-start;
+    max-width:none;
+  }
+  .footer-grid{
+    grid-template-columns:1fr!important;
+    justify-items:center;
+    text-align:center;
+    gap:18px;
+  }
+}
+@media(max-width:640px){
+  .guide-project-cta{padding:20px 0 52px}
+  .guide-project-cta-box{
+    padding:28px 22px;
+    border-radius:24px;
+    gap:26px;
+  }
+  .guide-project-cta-copy h2{font-size:clamp(28px,9vw,38px)}
+  .guide-project-cta-actions{
+    display:grid;
+    grid-template-columns:1fr;
+    width:100%;
+  }
+  .guide-project-cta-actions .btn{
+    width:100%;
+    min-width:0;
+  }
+  .legal-footer-links,
+  .footer-legal-links{
+    flex-direction:column;
+    gap:2px!important;
+  }
+  .legal-footer-links a:not(:first-child)::before,
+  .footer-legal-links a:not(:first-child)::before{
+    display:none;
+  }
+  .legal-footer-links a,
+  .footer-legal-links a{padding:6px 10px}
+}

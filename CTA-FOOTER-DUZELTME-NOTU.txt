@@ -1,0 +1,6 @@
+Düzeltilenler:
+- Rehber sayfalarındaki proje yol haritası alanı yeniden tasarlandı.
+- Ücretsiz keşif, WhatsApp ve Teklif Al butonları düzenlendi.
+- Footer yerleşimi düzeltildi.
+- Yasal bağlantılar arasına ayraç ve hover efekti eklendi.
+- Masaüstü, tablet ve mobil görünüm düzenlendi.
