@@ -1,0 +1,14 @@
+EMAK Mimarlık Rehberi filtre düzeltmesi
+
+Değişen dosyalar:
+- rehberler.html
+- style.css
+- script.js
+
+Yapılanlar:
+- 10 / 8 / Sade bilgi kutuları kaldırıldı.
+- Kategori filtreleri çalışır hale getirildi.
+- Seçilen kategoriye ait kartlar gösteriliyor, diğerleri gizleniyor.
+- Tümü düğmesi bütün rehberleri geri getiriyor.
+- Filtre sonucu sayısı erişilebilir biçimde gösteriliyor.
+- Kart geçiş animasyonu ve mobil düzen iyileştirildi.

@@ -631,16 +631,47 @@ if (topBtn) {
 
 /* GUIDE HUB FILTER */
 (() => {
-  const buttons = document.querySelectorAll('[data-guide-filter]');
-  const cards = document.querySelectorAll('.guide-hub-grid .guide-card');
-  if (!buttons.length || !cards.length) return;
-  buttons.forEach((button) => button.addEventListener('click', () => {
-    buttons.forEach((b) => b.classList.remove('active'));
-    button.classList.add('active');
-    const filter = button.dataset.guideFilter;
-    cards.forEach((card) => {
-      const category = card.querySelector('small')?.textContent.trim();
-      card.hidden = filter !== 'all' && category !== filter;
+  const filterBar = document.querySelector('.guide-filter');
+  const cards = [...document.querySelectorAll('.guide-hub-grid .guide-card')];
+  const status = document.querySelector('.guide-filter-status');
+  if (!filterBar || !cards.length) return;
+
+  const buttons = [...filterBar.querySelectorAll('[data-guide-filter]')];
+
+  const applyFilter = (selectedButton) => {
+    const filter = selectedButton.dataset.guideFilter || 'all';
+    let visibleCount = 0;
+
+    buttons.forEach((button) => {
+      const isActive = button === selectedButton;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
     });
-  }));
+
+    cards.forEach((card) => {
+      const category = card.dataset.guideCategory || '';
+      const shouldShow = filter === 'all' || category === filter;
+      card.hidden = !shouldShow;
+      card.classList.remove('guide-card-enter');
+
+      if (shouldShow) {
+        visibleCount += 1;
+        requestAnimationFrame(() => card.classList.add('guide-card-enter'));
+      }
+    });
+
+    if (status) {
+      status.textContent = filter === 'all'
+        ? `${visibleCount} rehber gösteriliyor.`
+        : `${filter} kategorisinde ${visibleCount} rehber gösteriliyor.`;
+    }
+  };
+
+  filterBar.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-guide-filter]');
+    if (!button) return;
+    applyFilter(button);
+  });
+
+  applyFilter(buttons.find((button) => button.classList.contains('active')) || buttons[0]);
 })();
