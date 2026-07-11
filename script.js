@@ -628,3 +628,19 @@ if (topBtn) {
     btn.setAttribute('aria-label','WhatsApp ile iletişime geç');
   });
 })();
+
+/* GUIDE HUB FILTER */
+(() => {
+  const buttons = document.querySelectorAll('[data-guide-filter]');
+  const cards = document.querySelectorAll('.guide-hub-grid .guide-card');
+  if (!buttons.length || !cards.length) return;
+  buttons.forEach((button) => button.addEventListener('click', () => {
+    buttons.forEach((b) => b.classList.remove('active'));
+    button.classList.add('active');
+    const filter = button.dataset.guideFilter;
+    cards.forEach((card) => {
+      const category = card.querySelector('small')?.textContent.trim();
+      card.hidden = filter !== 'all' && category !== filter;
+    });
+  }));
+})();
